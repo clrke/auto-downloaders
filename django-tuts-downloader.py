@@ -6,7 +6,7 @@ path = os.path.dirname(os.path.abspath(__file__))
 
 def getSoup(url):
 	response = urllib.request.urlopen(url)
-	data = response.read() 
+	data = response.read()
 	text = data.decode('utf-8')
 
 	return BeautifulSoup(text)
@@ -23,7 +23,7 @@ for page in reversed(range(1,9)):
 		full_link = 'https://godjango.com' + part_link
 
 		episode_number = "%03d"%int(number_finder.findall(part_link)[0])
-		
+
 		for f in files:
 			if f.startswith(episode_number):
 				break
