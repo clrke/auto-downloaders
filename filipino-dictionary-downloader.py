@@ -1,5 +1,6 @@
 import os, re, glob
 import urllib.request
+import unicodedata
 from bs4 import BeautifulSoup
 
 domain = 'http://tagaloglang.com/'
@@ -33,8 +34,8 @@ def find_all_translations(soup):
 
 			if tagalog and english and tagalog.string and english.string is not None:
 				if ' ' not in tagalog.string.strip() and tagalog.string is not english.string:
-					file_string += tagalog.string.strip() + "\n"
-					file_string += str([word.strip() for word in english.string.strip().split(',')]) + "\n"
+					file_string += unicodedata.normalize('NFD', tagalog.string.strip()).encode('ascii', 'ignore').decode("utf-8") + "\n"
+					file_string += unicodedata.normalize('NFD', str([word.strip() for word in english.string.strip().split(',')])).encode('ascii', 'ignore').decode("utf-8") + "\n"
 					file_string += "\n"
 
 	f = open('translations.txt', 'a')
