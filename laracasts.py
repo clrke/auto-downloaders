@@ -29,7 +29,7 @@ if 'You are now logged in!' in response:
 	download_path = os.path.dirname(os.path.abspath(__file__))
 	download_url = "https://laracasts.com/downloads/%s?type=episode"
 
-	i = 0
+	i = int(sys.argv[3]) if len(sys.argv) > 3 else 0
 
 	while True:
 		video_link = download_url%i
