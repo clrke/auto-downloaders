@@ -1,10 +1,26 @@
 import sys
+import os
+
+download_path = os.path.join(
+	os.path.dirname(os.path.abspath(__file__)),
+	'laracasts/'
+)
+
+def latest_episode(folder_name):
+	episodes =  os.listdir(folder_name)
+	latest_episode = 0
+
+	for episode in episodes:
+		episode_number = int(episode.split(' ')[0])
+		if episode_number > latest_episode:
+			latest_episode = episode_number
+
+	return latest_episode
 
 if len(sys.argv) < 3:
 	print 'Incomplete number of args.'
 	print 'Usage: python laracasts.py username password [from_episode]'
 else:
-	import os
 	import mechanize
 
 	import urllib2
@@ -30,10 +46,9 @@ else:
 	if 'You are now logged in!' in response:
 		print 'You are now logged in! Scraping...'
 
-		download_path = os.path.dirname(os.path.abspath(__file__))
 		download_url = "https://laracasts.com/downloads/%s?type=episode"
 
-		i = int(sys.argv[3]) if len(sys.argv) > 3 else 0
+		i = int(sys.argv[3]) if len(sys.argv) > 3 else latest_episode(download_path)+1
 
 		while True:
 			video_link = download_url%i
@@ -60,7 +75,7 @@ else:
 				title = params['filename']
 				body = response.read()
 
-				filename = 'laracasts/%s %s'%(episode_number, title)
+				filename = '%s %s'%(episode_number, title)
 
 				print 'Saving to %s...'%filename
 
