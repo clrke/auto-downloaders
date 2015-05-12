@@ -84,7 +84,9 @@ else:
 				f = open(os.path.join(download_path, filename), 'w')
 				f.write(body)
 				f.close()
-
+			
+			br.close()
+			
 			i += 1
 	else:
 		print 'Failed to log in.'
