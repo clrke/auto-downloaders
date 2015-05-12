@@ -17,15 +17,17 @@ def latest_episode(folder_name):
 
 	return latest_episode
 
-if len(sys.argv) < 3:
+if len(sys.argv) < 2:
 	print 'Incomplete number of args.'
-	print 'Usage: python laracasts.py username password [from_episode]'
+	print 'Usage: python laracasts.py email_address [from_episode]'
 else:
 	import mechanize
 
 	import urllib2
 	import cookielib
 	import cgi
+
+	from getpass import getpass
 
 	print 'Logging in...'
 
@@ -38,7 +40,7 @@ else:
 
 	br.select_form(nr=0)
 	br.form['email'] = sys.argv[1]
-	br.form['password'] = sys.argv[2]
+	br.form['password'] = getpass()
 	br.submit()
 
 	response = br.response().read()
@@ -48,7 +50,7 @@ else:
 
 		download_url = "https://laracasts.com/downloads/%s?type=episode"
 
-		i = int(sys.argv[3]) if len(sys.argv) > 3 else latest_episode(download_path)+1
+		i = int(sys.argv[2]) if len(sys.argv) > 2 else latest_episode(download_path)+1
 
 		while True:
 			video_link = download_url%i
