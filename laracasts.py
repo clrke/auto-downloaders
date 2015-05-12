@@ -31,8 +31,12 @@ else:
 
 	print 'Logging in...'
 
+	class NoHistory(object):
+		def add(self, *a, **k): pass
+		def clear(self): pass
+
 	cj = cookielib.CookieJar()
-	br = mechanize.Browser()
+	br = mechanize.Browser(history=NoHistory())
 	br.set_handle_robots(False)
 
 	br.set_cookiejar(cj)
@@ -84,8 +88,6 @@ else:
 				f = open(os.path.join(download_path, filename), 'w')
 				f.write(body)
 				f.close()
-			
-			br.close()
 			
 			i += 1
 	else:
