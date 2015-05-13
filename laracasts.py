@@ -29,8 +29,6 @@ else:
 
 	from getpass import getpass
 
-	print 'Logging in...'
-
 	class NoHistory(object):
 		def add(self, *a, **k): pass
 		def clear(self): pass
@@ -47,6 +45,7 @@ else:
 	br.form['password'] = getpass()
 	br.submit()
 
+	print 'Logging in...'
 	response = br.response().read()
 
 	if 'You are now logged in!' in response:
@@ -88,7 +87,7 @@ else:
 				f = open(os.path.join(download_path, filename), 'w')
 				f.write(body)
 				f.close()
-			
+
 			i += 1
 	else:
 		print 'Failed to log in.'
