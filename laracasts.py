@@ -33,6 +33,16 @@ else:
 		def add(self, *a, **k): pass
 		def clear(self): pass
 
+	def read_in_chunks(file_object):
+		i = 1
+		while True:
+			data = file_object.readline()
+			if not data:
+				break
+
+			yield i, data
+			i += 1
+
 	cj = cookielib.CookieJar()
 	br = mechanize.Browser(history=NoHistory())
 	br.set_handle_robots(False)
@@ -77,8 +87,19 @@ else:
 							if 'Content-Disposition' in header
 					][0])
 
+				bytes_count = [
+					header for header in headers
+						if 'Content-Length' in header
+				][0]
+
+				print bytes_count
+
 				title = params['filename']
-				body = response.read()
+				body = '';
+
+				for (progress, chunk) in read_in_chunks(response):
+					print '\r%d'%progress,
+					body += chunk
 
 				filename = '%s %s'%(episode_number, title)
 
