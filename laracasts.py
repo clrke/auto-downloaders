@@ -34,14 +34,14 @@ else:
 		def clear(self): pass
 
 	def read_in_chunks(file_object):
-		i = 1
+		progress = 1
 		while True:
 			data = file_object.readline()
 			if not data:
 				break
 
-			yield i, data
-			i += 1
+			yield progress, data
+			progress += 1
 
 	cj = cookielib.CookieJar()
 	br = mechanize.Browser(history=NoHistory())
