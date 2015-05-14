@@ -91,3 +91,5 @@ else:
 			i += 1
 	else:
 		print 'Failed to log in.'
+
+	br.close()
