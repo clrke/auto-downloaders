@@ -82,11 +82,13 @@ else:
 
 				filename = '%s %s'%(episode_number, title)
 
-				print 'Saving to %s...'%filename
+				print 'Saving...',
 
 				f = open(os.path.join(download_path, filename), 'w')
 				f.write(body)
 				f.close()
+
+				print '\rSaved to %s!'%filename
 
 			i += 1
 	else:
