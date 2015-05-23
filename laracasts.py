@@ -32,6 +32,7 @@ else:
 	class NoHistory(object):
 		def add(self, *a, **k): pass
 		def clear(self): pass
+		def close(self): pass
 
 	def read_in_chunks(file_object):
 		progress = 1
