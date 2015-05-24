@@ -107,6 +107,7 @@ else:
 				title = params['filename']
 				body = [];
 
+				print '\r%d / %d [%d%%]'%(0, bytes_count, 0),
 				for (progress, chunk) in read_in_chunks(response):
 					print '\r%d / %d [%d%%]'%(progress, bytes_count, progress*100/bytes_count),
 					body.append(chunk)
