@@ -134,7 +134,7 @@ else:
 				f.write(body)
 				f.close()
 
-				print '\rSaved to %s!'%filename
+				print '\rSaved as %s!'%filename
 
 			i += 1
 	else:
