@@ -89,6 +89,8 @@ else:
 			if br.viewing_html():
 				print '%s does not exist.'%episode_number
 			else:
+				print 'Downloading episode %s...'%episode_number
+
 				response = br.response()
 
 				headers = response.info().headers
