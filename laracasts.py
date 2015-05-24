@@ -71,7 +71,7 @@ else:
 	response = br.response().read()
 
 	if 'You are now logged in!' in response:
-		print 'You are now logged in! Scraping...\n'
+		print 'You are now logged in! Scraping...'
 
 		download_url = "https://laracasts.com/downloads/%s?type=episode"
 
@@ -82,7 +82,7 @@ else:
 
 			episode_number = '%04d'%i
 
-			print 'Downloading from %s...'%video_link
+			print '\nChecking %s...'%video_link
 
 			br.open(video_link)
 
@@ -122,7 +122,7 @@ else:
 				f.write(body)
 				f.close()
 
-				print '\rSaved to %s!\n'%filename
+				print '\rSaved to %s!'%filename
 
 			i += 1
 	else:
