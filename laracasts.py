@@ -99,7 +99,7 @@ else:
 			if br.viewing_html():
 				print '%s does not exist.'%episode_number
 			else:
-				print 'Downloading episode %s...'%episode_number
+				print 'Downloading episode #%d...'%i
 
 				response = br.response()
 
