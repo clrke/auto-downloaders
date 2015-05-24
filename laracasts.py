@@ -36,13 +36,24 @@ else:
 
 	def read_in_chunks(file_object):
 		progress = 0
+
 		while True:
-			data = file_object.readline()
-			if not data:
+			chunk = []
+			for i in range(10):
+				data = file_object.readline()
+
+				if not data:
+					break
+
+				chunk.append(data)
+
+			if not chunk:
 				break
 
-			progress += len(data)
-			yield progress, data
+			chunk = ''.join(chunk)
+			progress += len(chunk)
+
+			yield progress, chunk
 
 	cj = cookielib.CookieJar()
 	br = mechanize.Browser(history=NoHistory())
@@ -94,11 +105,13 @@ else:
 				][0].split(' ')[-1])
 
 				title = params['filename']
-				body = '';
+				body = [];
 
 				for (progress, chunk) in read_in_chunks(response):
 					print '\r%d / %d [%d%%]'%(progress, bytes_count, progress*100/bytes_count),
-					body += chunk
+					body.append(chunk)
+
+				body = ''.join(body)
 
 				filename = '%s %s'%(episode_number, title)
 
