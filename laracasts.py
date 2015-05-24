@@ -55,23 +55,33 @@ else:
 
 			yield progress, chunk
 
+	print 'Initializing virtual browser...'
+
 	cj = cookielib.CookieJar()
 	br = mechanize.Browser(history=NoHistory())
 	br.set_handle_robots(False)
-
 	br.set_cookiejar(cj)
+
+	print 'Accessing Laracasts...'
+
 	br.open("https://laracasts.com/login")
 
+	print '\n       Log In'
 	br.select_form(nr=0)
-	br.form['email'] = sys.argv[1]
+
+	email_address = sys.argv[1]
+	print '   Email: %s' % email_address
+	br.form['email'] = email_address
+
 	br.form['password'] = getpass()
+
 	br.submit()
 
 	print 'Logging in...'
 	response = br.response().read()
 
 	if 'You are now logged in!' in response:
-		print 'You are now logged in! Scraping...'
+		print '\nYou are now logged in! Scraping...'
 
 		download_url = "https://laracasts.com/downloads/%s?type=episode"
 
