@@ -17,6 +17,7 @@ class NoHistory(object):
 class VirtualBrowserException(Exception):
     pass
 
+
 class VirtualBrowser(mechanize.Browser):
     def __init__(self, login_page=None):
         mechanize.Browser.__init__(self, history=NoHistory())
