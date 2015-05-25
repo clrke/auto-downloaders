@@ -24,8 +24,6 @@ if len(sys.argv) < 2:
 	print 'Usage: python laracasts.py email_address [from_episode]'
 else:
 	import mechanize
-
-	import urllib2
 	import cookielib
 
 	from getpass import getpass
