@@ -27,6 +27,8 @@ class VirtualBrowser(mechanize.Browser):
         self.set_handle_robots(False)
         self.set_cookiejar(cj)
 
+        self.addheaders = [('User-agent', 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1')]
+
     def login(self, email_address):
         if not self.login_page:
             raise VirtualBrowserException('No login page was specified.')
