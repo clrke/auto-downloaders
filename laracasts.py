@@ -1,6 +1,8 @@
 import sys
 import os
 
+from download import download
+
 download_path = os.path.join(
 	os.path.dirname(os.path.abspath(__file__)),
 	'laracasts/'
@@ -25,7 +27,6 @@ else:
 
 	import urllib2
 	import cookielib
-	import cgi
 
 	from getpass import getpass
 
@@ -33,27 +34,6 @@ else:
 		def add(self, *a, **k): pass
 		def clear(self): pass
 		def close(self): pass
-
-	def read_in_chunks(file_object):
-		progress = 0
-
-		while True:
-			chunk = []
-			for i in range(10):
-				data = file_object.readline()
-
-				if not data:
-					break
-
-				chunk.append(data)
-
-			if not chunk:
-				break
-
-			chunk = ''.join(chunk)
-			progress += len(chunk)
-
-			yield progress, chunk
 
 	print 'Initializing virtual browser...'
 
@@ -101,35 +81,11 @@ else:
 			else:
 				print 'Downloading episode #%d...'%i
 
-				response = br.response()
-
-				headers = response.info().headers
-
-				_, params = cgi.parse_header(
-					[
-						header for header in headers
-							if 'Content-Disposition' in header
-					][0])
-
-				bytes_count = float([
-					header for header in headers
-						if 'Content-Length' in header
-				][0].split(' ')[-1])
-
-				title = params['filename']
-				body = [];
-
-				print '\r%d / %d [%d%%]'%(0, bytes_count, 0),
-				for (progress, chunk) in read_in_chunks(response):
-					print '\r%d / %d [%d%%]'%(progress, bytes_count, progress*100/bytes_count),
-					body.append(chunk)
-
-				body = ''.join(body)
-
-				filename = '%s %s'%(episode_number, title)
+				title, body = download(br.response())
 
 				print '\nSaving...',
 
+				filename = '%s %s'%(episode_number, title)
 				f = open(os.path.join(download_path, filename), 'w')
 				f.write(body)
 				f.close()
