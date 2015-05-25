@@ -2,6 +2,7 @@ import sys
 import os
 
 from download import download
+from virtual_browser import VirtualBrowser
 
 download_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
@@ -25,41 +26,17 @@ if len(sys.argv) < 2:
     print 'Incomplete number of args.'
     print 'Usage: python laracasts.py email_address [from_episode]'
 else:
-    import mechanize
-    import cookielib
-
-    from getpass import getpass
-
-    class NoHistory(object):
-        def add(self, *a, **k): pass
-
-        def clear(self): pass
-
-        def close(self): pass
-
     print 'Initializing virtual browser...'
 
-    cj = cookielib.CookieJar()
-    br = mechanize.Browser(history=NoHistory())
-    br.set_handle_robots(False)
-    br.set_cookiejar(cj)
+    br = VirtualBrowser('https://laracasts.com/login')
 
     print 'Accessing Laracasts...'
 
-    br.open("https://laracasts.com/login")
-
-    print '\n       Log In'
-    br.select_form(nr=0)
-
     email_address = sys.argv[1]
-    print '   Email: %s' % email_address
-    br.form['email'] = email_address
-
-    br.form['password'] = getpass()
-
-    br.submit()
+    br.login(email_address)
 
     print 'Logging in...'
+
     response = br.response().read()
 
     if 'You are now logged in!' in response:
