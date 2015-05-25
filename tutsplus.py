@@ -12,7 +12,7 @@ from virtual_browser import VirtualBrowser
 
 download_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
-    'net tuts/%s' % sys.argv[3]
+    'tutsplus/%s' % sys.argv[3]
 )
 
 print 'Initializing virtual browser...'
