@@ -4,94 +4,98 @@ import os
 from download import download
 
 download_path = os.path.join(
-	os.path.dirname(os.path.abspath(__file__)),
-	'laracasts/'
+    os.path.dirname(os.path.abspath(__file__)),
+    'laracasts/'
 )
 
+
 def latest_episode(folder_name):
-	episodes =  os.listdir(folder_name)
-	latest_episode = 0
+    episodes = os.listdir(folder_name)
+    latest = 0
 
-	for episode in episodes:
-		episode_number = int(episode.split(' ')[0])
-		if episode_number > latest_episode:
-			latest_episode = episode_number
+    for episode in episodes:
+        number = int(episode.split(' ')[0])
+        if number > latest:
+            latest = number
 
-	return latest_episode
+    return latest
+
 
 if len(sys.argv) < 2:
-	print 'Incomplete number of args.'
-	print 'Usage: python laracasts.py email_address [from_episode]'
+    print 'Incomplete number of args.'
+    print 'Usage: python laracasts.py email_address [from_episode]'
 else:
-	import mechanize
-	import cookielib
+    import mechanize
+    import cookielib
 
-	from getpass import getpass
+    from getpass import getpass
 
-	class NoHistory(object):
-		def add(self, *a, **k): pass
-		def clear(self): pass
-		def close(self): pass
+    class NoHistory(object):
+        def add(self, *a, **k): pass
 
-	print 'Initializing virtual browser...'
+        def clear(self): pass
 
-	cj = cookielib.CookieJar()
-	br = mechanize.Browser(history=NoHistory())
-	br.set_handle_robots(False)
-	br.set_cookiejar(cj)
+        def close(self): pass
 
-	print 'Accessing Laracasts...'
+    print 'Initializing virtual browser...'
 
-	br.open("https://laracasts.com/login")
+    cj = cookielib.CookieJar()
+    br = mechanize.Browser(history=NoHistory())
+    br.set_handle_robots(False)
+    br.set_cookiejar(cj)
 
-	print '\n       Log In'
-	br.select_form(nr=0)
+    print 'Accessing Laracasts...'
 
-	email_address = sys.argv[1]
-	print '   Email: %s' % email_address
-	br.form['email'] = email_address
+    br.open("https://laracasts.com/login")
 
-	br.form['password'] = getpass()
+    print '\n       Log In'
+    br.select_form(nr=0)
 
-	br.submit()
+    email_address = sys.argv[1]
+    print '   Email: %s' % email_address
+    br.form['email'] = email_address
 
-	print 'Logging in...'
-	response = br.response().read()
+    br.form['password'] = getpass()
 
-	if 'You are now logged in!' in response:
-		print '\nYou are now logged in! Scraping...'
+    br.submit()
 
-		download_url = "https://laracasts.com/downloads/%s?type=episode"
+    print 'Logging in...'
+    response = br.response().read()
 
-		i = int(sys.argv[2]) if len(sys.argv) > 2 else latest_episode(download_path)+1
+    if 'You are now logged in!' in response:
+        print '\nYou are now logged in! Scraping...'
 
-		while True:
-			video_link = download_url%i
+        download_url = "https://laracasts.com/downloads/%s?type=episode"
 
-			episode_number = '%04d'%i
+        i = int(sys.argv[2]) if len(sys.argv) > 2 else latest_episode(download_path) + 1
 
-			print '\nChecking %s...'%video_link
+        while True:
+            video_link = download_url % i
 
-			br.open(video_link)
+            episode_number = '%04d' % i
 
-			if br.viewing_html():
-				print '%s does not exist.'%episode_number
-			else:
-				print 'Downloading episode #%d...'%i
+            print '\nChecking %s...' % video_link
 
-				title, body = download(br.response())
+            br.open(video_link)
 
-				print '\nSaving...',
+            if br.viewing_html():
+                print '%s does not exist.' % episode_number
+            else:
+                print 'Downloading episode #%d...' % i
 
-				filename = '%s %s'%(episode_number, title)
-				f = open(os.path.join(download_path, filename), 'w')
-				f.write(body)
-				f.close()
+                title, body = download(br.response())
 
-				print '\rSaved as %s!'%filename
+                print '\nSaving...',
 
-			i += 1
-	else:
-		print 'Failed to log in.'
+                filename = '%s %s' % (episode_number, title)
+                f = open(os.path.join(download_path, filename), 'w')
+                f.write(body)
+                f.close()
 
-	br.close()
+                print '\rSaved as %s!' % filename
+
+            i += 1
+    else:
+        print 'Failed to log in.'
+
+    br.close()
