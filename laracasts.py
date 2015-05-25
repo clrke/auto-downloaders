@@ -49,11 +49,10 @@ else:
         while True:
             video_link = download_url % i
 
-            episode_number = '%04d' % i
-
             print '\nChecking %s...' % video_link
-
             br.open(video_link)
+
+            episode_number = '%04d' % i
 
             if br.viewing_html():
                 print '%s does not exist.' % episode_number
