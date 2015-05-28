@@ -1,4 +1,5 @@
 import cgi
+import urllib2
 
 
 def read_in_chunks(file_object):
@@ -47,3 +48,17 @@ def download(response):
         body.append(chunk)
 
     return title, ''.join(body)
+
+
+def download_from_url(url):
+    page = urllib2.urlopen(url)
+
+    bytes_count = float(page.headers['content-length'])
+    body = []
+
+    print '\r%d / %d [%d%%]' % (0, bytes_count, 0),
+    for (progress, chunk) in read_in_chunks(page):
+        print '\r%d / %d [%d%%]' % (progress, bytes_count, progress * 100 / bytes_count),
+        body.append(chunk)
+
+    return ''.join(body)

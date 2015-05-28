@@ -31,7 +31,25 @@ response = br.response().read()
 if 'Sign Out' in response:
     print '\nYou are now logged in! Scraping...'
 
-    download_url = sys.argv[2]
+    def download_urls(first_page):
+        br.open(first_page)
+        response = br.response().read()
+        soup = BeautifulSoup(br.response().read())
+
+        f = open('asdf.html', 'w')
+
+        f.write(str(soup))
+
+        f.close()
+        print soup
+
+        src = soup.find('video').find('source')
+        print src
+
+        return src
+
+    for download_url in download_urls(sys.argv[2]):
+        print download_url
 
     print download_url, 'to', download_path
 else:
