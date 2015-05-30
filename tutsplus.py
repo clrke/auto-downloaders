@@ -52,7 +52,7 @@ try:
     login_form.find_element_by_tag_name('button').submit()
 
     def video_links(page_link):
-        while page_link:
+        while True:
             browser.get(page_link)
             sleep(seconds_to_wait)
 
@@ -69,10 +69,9 @@ try:
             yield page_title, page_video
 
             try:
-                next_a = browser.find_element_by_class_name('lesson-video__next-link')
+                page_link = browser.find_element_by_class_name('lesson-video__next-link').get_attribute('href')
             except NoSuchElementException:
-                next_a = None
-            page_link = next_a.get_attribute('href') if next_a else None
+                break
 
     links = list(video_links(sys.argv[2]))
 
