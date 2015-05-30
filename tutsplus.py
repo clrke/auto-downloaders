@@ -70,7 +70,10 @@ try:
             except NoSuchElementException:
                 break
 
-    links = list(video_links(sys.argv[2]))
+    links = []
+    for link in video_links(sys.argv[2]):
+        print '%s: %s' % (link[1], link[0])
+        links.append(link)
 
     browser.quit()
 
