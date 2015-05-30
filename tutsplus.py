@@ -44,6 +44,11 @@ try:
 
     login_form.find_element_by_tag_name('button').submit()
 
+    if browser.current_url == 'https://tutsplus.com/sessions':
+        browser.quit()
+        print 'Incorrect email_address or password.'
+        sys.exit()
+
     def video_links(page_link):
         while True:
             browser.get(page_link)
