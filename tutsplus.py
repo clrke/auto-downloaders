@@ -16,10 +16,7 @@ if len(sys.argv) < 4:
 
     sys.exit()
 
-if len(sys.argv) > 4:
-    seconds_to_wait = float(sys.argv[4])
-else:
-    seconds_to_wait = 10
+seconds_to_wait = float(sys.argv[4]) if len(sys.argv) > 4 else 10
 
 import os
 from download import download_from_url
