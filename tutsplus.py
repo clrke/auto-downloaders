@@ -78,6 +78,9 @@ try:
     for link in links:
         title = link[0]
         video = link[1]
+
+        print '\nDownloading %s...' % title
+
         body = download_from_url(video)
 
         print '\nSaving...',
