@@ -16,6 +16,9 @@ download_path = os.path.join(
     'laracasts/'
 )
 
+if not os.path.exists(download_path):
+    os.makedirs(download_path)
+
 
 def latest_episode(folder_name):
     episodes = os.listdir(folder_name)
