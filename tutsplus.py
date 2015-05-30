@@ -91,6 +91,6 @@ try:
 
         print '\rSaved as %s!' % title
 
-except Exception as e:
+except Exception, e:
     print traceback.format_exc()
     browser.quit()
