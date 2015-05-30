@@ -93,5 +93,4 @@ try:
 
 except Exception as e:
     print traceback.format_exc()
-finally:
     browser.quit()
