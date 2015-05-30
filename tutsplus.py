@@ -30,6 +30,9 @@ download_path = os.path.join(
     'tutsplus/%s' % sys.argv[3]
 )
 
+if not os.path.exists(download_path):
+    os.makedirs(download_path)
+
 username = sys.argv[1]
 password = getpass()
 
