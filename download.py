@@ -7,7 +7,7 @@ def read_in_chunks(file_object):
 
     while True:
         chunk = []
-        for i in range(10):
+        for i in range(100):
             data = file_object.readline()
 
             if not data:
