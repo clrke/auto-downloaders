@@ -40,7 +40,6 @@ browser = Chrome()
 try:
     soup = BeautifulSoup()
 
-    browser.set_window_size(1120, 520)
     browser.maximize_window()
 
     browser.get('http://tutsplus.com/sign_in')
