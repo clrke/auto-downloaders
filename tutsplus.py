@@ -4,7 +4,6 @@ import sys
 
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver import Chrome
-from bs4 import BeautifulSoup
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
@@ -34,8 +33,6 @@ password = getpass()
 
 browser = Chrome()
 try:
-    soup = BeautifulSoup()
-
     browser.maximize_window()
 
     browser.get('http://tutsplus.com/sign_in')
