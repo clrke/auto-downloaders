@@ -31,7 +31,7 @@ def latest_episode(folder_name):
 
 print 'Initializing virtual browser...'
 
-br = VirtualBrowser('https://laracasts.com/login')
+br = VirtualBrowser('http://laracasts.com/login')
 
 print 'Accessing Laracasts...'
 
