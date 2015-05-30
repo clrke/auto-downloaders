@@ -53,15 +53,15 @@ try:
         while True:
             browser.get(page_link)
 
+            page_video = WebDriverWait(browser, seconds_to_wait).until(
+                expected_conditions.presence_of_element_located(
+                    (By.TAG_NAME, 'video'))).find_element_by_tag_name('source').get_attribute('src')
+
             lesson_text = browser.find_element_by_class_name('lesson-index__lesson--current') \
                 .find_element_by_class_name('lesson-index__lesson-text')
 
             page_title = "%s %s" % (lesson_text.find_element_by_class_name('lesson-index__lesson-number').text,
                                     lesson_text.find_element_by_class_name('lesson-index__lesson-title').text)
-
-            page_video = WebDriverWait(browser, seconds_to_wait).until(
-                expected_conditions.presence_of_element_located(
-                    (By.TAG_NAME, 'video'))).find_element_by_tag_name('source').get_attribute('src')
 
             yield page_title, page_video
 
