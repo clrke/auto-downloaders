@@ -1,6 +1,5 @@
 from getpass import getpass
 import traceback
-from time import sleep
 import sys
 
 from selenium.common.exceptions import NoSuchElementException
@@ -54,7 +53,6 @@ try:
     def video_links(page_link):
         while True:
             browser.get(page_link)
-            sleep(seconds_to_wait)
 
             lesson_text = browser.find_element_by_class_name('lesson-index__lesson--current') \
                 .find_element_by_class_name('lesson-index__lesson-text')
