@@ -60,7 +60,7 @@ try:
             lesson_text = browser.find_element_by_class_name('lesson-index__lesson--current') \
                 .find_element_by_class_name('lesson-index__lesson-text')
 
-            page_title = "%s %s" % (lesson_text.find_element_by_class_name('lesson-index__lesson-number').text,
+            page_title = "%s %s.mp4" % (lesson_text.find_element_by_class_name('lesson-index__lesson-number').text,
                                     lesson_text.find_element_by_class_name('lesson-index__lesson-title').text)
 
             yield page_title, page_video
