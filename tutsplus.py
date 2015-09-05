@@ -61,7 +61,7 @@ try:
                 .find_element_by_class_name('lesson-index__lesson-text')
 
             page_title = "%s %s.mp4" % (lesson_text.find_element_by_class_name('lesson-index__lesson-number').text,
-                                    lesson_text.find_element_by_class_name('lesson-index__lesson-title').text)
+                                    lesson_text.find_element_by_class_name('lesson-index__lesson-title').text.replace('/', '\\/'))
 
             yield page_title, page_video
 
